@@ -14,7 +14,7 @@ public class UserDaoImpl extends AbstractHbnDao<User> implements UserDao {
 	@Override
 	public IUser getByName(String name) {
 		Criteria userCriteria = getSession().createCriteria(IUser.class);
-		userCriteria.add(Restrictions.eq("username", name));
+		userCriteria.add(Restrictions.eq("name", name));
 		IUser user = (User) userCriteria.uniqueResult();
 		return user;
 	}

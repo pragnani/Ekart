@@ -21,6 +21,7 @@ public class UserController implements IUserController {
 	@RequestMapping("/register/available")
 	@ResponseBody
 	public String checkIfUserExists(@RequestParam String username) {
+		System.out.println("Hello");
 		User user = client.getUserByName(username);
 		Boolean isExist= user==null;
 		return isExist.toString();
@@ -29,7 +30,12 @@ public class UserController implements IUserController {
 	@RequestMapping(path="/register", method= RequestMethod.POST)
 	@ResponseBody
 	public RegisterForm registerUser(@ModelAttribute RegisterForm registrationForm){
-		client.registerUser(registrationForm);
+		try {
+		
+		User user = client.registerUser(registrationForm);
+		} catch (Exception e) {
+			
+		}
 		return registrationForm; 
 	}
 

@@ -14,6 +14,7 @@ import com.ekart.app.model.Role;
 import com.ekart.app.model.User;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
 	@Autowired
@@ -22,7 +23,6 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	RoleDao roleDao;
 
-	@Transactional
 	@Override
 	public void createUser(User user) throws UserAlreadyExistException {
 		try {
@@ -57,7 +57,6 @@ public class UserServiceImpl implements UserService {
 		return null;
 	}
 
-	@Transactional
 	@Override
 	public void createRole(Role role) {
 		roleDao.create(role);

@@ -14,8 +14,6 @@ $(function() {
 		$(this).addClass('active');
 		e.preventDefault();
 	});
-	
-
 
 	$("#register-form").validate(
 			{
@@ -24,11 +22,12 @@ $(function() {
 						required : true,
 						minlength : 4,
 						remote : {
-							url : contextRoot+"register/available",
+							url : "/register/available",
 							type : "get",
 							data : {
 								username : function() {
-									return $("#username").val();
+									return $("#register-form")
+											.find("#username").val();
 								}
 							}
 						}
@@ -66,18 +65,22 @@ $(function() {
 				}
 			});
 	$("#register-submit").on("click", function(e) {
-		var $form = $('#register-form');
-		$form.find('#confirm-password').attr('disabled', 'disabled');
 
-		$.ajax({
-			type : "POST",
-			cache : false,
-			url : $form.attr('action'),
-			data : $form.serializeArray(),
-			success : function(data) {
-				alert(data);
-			}
-		});
+		var $form = $('#register-form');
+		if ($form.valid()) {
+			$form.find('#confirm-password').attr('disabled', 'disabled');
+
+			$.ajax({
+				type : "POST",
+				cache : false,
+				url : $form.attr('action'),
+				data : $form.serializeArray(),
+				success : function(data) {
+					alert(data);
+				}
+			});
+
+		}
 
 	});
 

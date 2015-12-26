@@ -6,6 +6,9 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>Ekart-Services</name>
+	<properties>
+	<start-class>com.ekart.app.services.EkartApp</start-class>
+	</properties>
 
 	<build>
 		<plugins>
@@ -66,6 +69,10 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-hibernate4</artifactId>
 		</dependency>
 
 		<dependency>

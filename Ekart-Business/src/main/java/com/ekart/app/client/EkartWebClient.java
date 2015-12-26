@@ -42,18 +42,10 @@ public class EkartWebClient {
 
 	public User getUserByName(String name) {
 
-		String url = SERVER_ADDRESS + REGISTER_USER;
+		String url = SERVER_ADDRESS + REGISTER_USER+"?name="+name;
 		RestTemplate template = new RestTemplate();
 
-		HttpHeaders headers = new HttpHeaders();
-		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-		HttpEntity<String> httpEntity = new HttpEntity<>(headers);
-
-		Map<String, String> params = new HashMap<>();
-		params.put("name", name);
-
-		ResponseEntity<User> userEntity = template.exchange(url, HttpMethod.GET, httpEntity, User.class, params);
-		User user = userEntity.getBody();
+		User user = template.getForObject(url,  User.class );
 
 		return user;
 	}
