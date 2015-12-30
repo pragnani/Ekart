@@ -25,4 +25,6 @@ import com.ekart.app.model.User;
 	
 	 List<Role> getAllRoles();
 	 IUser getByName(String name);
+
+	 IUser getByUserNameAndPassword(String username, String password);
 }

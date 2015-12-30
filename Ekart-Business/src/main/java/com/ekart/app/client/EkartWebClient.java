@@ -1,13 +1,11 @@
 package com.ekart.app.client;
 
-import static com.ekart.app.rest.DataServiceUtil.REGISTER_USER;
 import static com.ekart.app.rest.DataServiceUtil.SERVER_ADDRESS;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import static com.ekart.app.rest.DataServiceUtil.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -29,12 +27,11 @@ public class EkartWebClient {
 
 	public User registerUser(RegisterForm registerForm) {
 
-		String url = SERVER_ADDRESS + REGISTER_USER;
-		RestTemplate template = new RestTemplate();
+		String url = SERVER_ADDRESS + POST_REGISTER_USER;
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-
+		RestTemplate template = new RestTemplate();
 		User user = template.postForObject(url, registerForm, User.class);
 
 		return user;
@@ -42,12 +39,26 @@ public class EkartWebClient {
 
 	public User getUserByName(String name) {
 
-		String url = SERVER_ADDRESS + REGISTER_USER+"?name="+name;
+		String url = SERVER_ADDRESS + GET_USER + "?name=" + name;
 		RestTemplate template = new RestTemplate();
 
-		User user = template.getForObject(url,  User.class );
+		User user = template.getForObject(url, User.class);
 
 		return user;
+	}
+
+	public User getByCredentials(String base64CredString) {
+
+		String url = SERVER_ADDRESS + POST_LOGIN;
+		RestTemplate template = new RestTemplate();
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Authorization", "Basic " + base64CredString);
+
+		HttpEntity<String> request = new HttpEntity<String>(headers);
+		ResponseEntity<User> response = template.exchange(url, HttpMethod.POST, request, User.class);
+
+		return response.getBody();
 	}
 
 }

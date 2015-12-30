@@ -8,6 +8,7 @@
 	<name>Ekart-Web</name>
 	<properties>
 		<apache.tiles>3.0.4</apache.tiles>
+		<start-class>com.ekart.app.EkartWebApp</start-class>
 	</properties>
 
 	<build>
@@ -71,6 +72,10 @@
 			<version>${apache.tiles}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-taglibs</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.apache.tiles</groupId>
 			<artifactId>tiles-jsp</artifactId>

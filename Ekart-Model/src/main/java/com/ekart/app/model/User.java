@@ -2,6 +2,7 @@ package com.ekart.app.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,6 +16,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+
+import org.hibernate.annotations.FetchMode;
 
 @Entity
 @Table(
@@ -38,7 +41,7 @@ public class User extends AbstractEntity implements IUser {
 
 	private boolean enabled;
 
-	@OneToMany(mappedBy = "user")
+	@OneToMany(cascade=CascadeType.ALL,mappedBy = "user")
 	private List<Address> userAdress;
 
 	@OneToOne
@@ -117,6 +120,16 @@ public class User extends AbstractEntity implements IUser {
 
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
+	}
+
+
+	public String getUsername() {
+		return username;
+	}
+
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 

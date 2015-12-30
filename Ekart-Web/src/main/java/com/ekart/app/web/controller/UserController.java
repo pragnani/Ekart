@@ -10,8 +10,6 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.RememberMeServices;
-import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +17,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ekart.app.business.response.Status;
+import com.ekart.app.business.response.StatusFactory;
 import com.ekart.app.client.EkartWebClient;
+import com.ekart.app.form.LoginForm;
 import com.ekart.app.form.RegisterForm;
 import com.ekart.app.model.User;
 
@@ -33,12 +34,6 @@ public class UserController implements IUserController {
 	@Qualifier("authenticationManager")
 	AuthenticationManager authenticationManager;
 
-	@Autowired
-	SecurityContextRepository repository;
-
-	@Autowired
-	RememberMeServices rememberMeServices;
-
 	@RequestMapping("/register/available")
 	@ResponseBody
 	public String checkIfUserExists(@RequestParam String username) {
@@ -48,40 +43,34 @@ public class UserController implements IUserController {
 		return isExist.toString();
 	}
 
-	@RequestMapping(path = "/login", method = RequestMethod.GET)
-	public void login() {
-	}
+	
 
-	@RequestMapping(method = RequestMethod.POST)
+	@RequestMapping(path="/login", method = RequestMethod.POST)
 	@ResponseBody
-	public String performLogin(@RequestParam("j_username") String username,
-			@RequestParam("j_password") String password,
-			HttpServletRequest request, HttpServletResponse response) {
-		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-				username, password);
+	public Status performLogin(@ModelAttribute LoginForm loginForm, HttpServletRequest request, HttpServletResponse response) {
+		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginForm.getUsername(), loginForm.getPassword());
 		try {
 			Authentication auth = authenticationManager.authenticate(token);
 			SecurityContextHolder.getContext().setAuthentication(auth);
-			repository.saveContext(SecurityContextHolder.getContext(), request,
-					response);
-			rememberMeServices.loginSuccess(request, response, auth);
-			return "{\"status\": true}";
+			return StatusFactory.createSuccessStatus("Login Success");
 		} catch (BadCredentialsException ex) {
-			return "{\"status\": false, \"error\": \"Bad Credentials\"}";
+			return StatusFactory.createFailureStatus("Bad Credentials");
 		}
 	}
 
 	@RequestMapping(path = "/register", method = RequestMethod.POST)
 	@ResponseBody
-	public RegisterForm registerUser(
-			@ModelAttribute RegisterForm registrationForm) {
+	public Status registerUser(@ModelAttribute RegisterForm registrationForm) {
 		try {
 
 			User user = client.registerUser(registrationForm);
+			Boolean success = (user != null);
+			return success ? StatusFactory.createSuccessStatus("User Registration Successful") : StatusFactory.createFailureStatus("User Registration Failed");
 		} catch (Exception e) {
-
+			return StatusFactory.createFailureStatus("Something went wrong");
 		}
-		return registrationForm;
 	}
+
+
 
 }

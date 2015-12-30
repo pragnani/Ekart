@@ -4,6 +4,7 @@
 <br />
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ page isELIgnored="false"%> 
 <spring:url var="register" value="/register"></spring:url>
 <spring:url var="login" value="/login"></spring:url>
 <div class="row">
@@ -79,6 +80,8 @@
 							<div class="col-lg-12">
 								<form:form id="login-form" action="${login}" method="post"
 									role="form" style="display: block;" modelAttribute="loginForm">
+
+									<div class="alert alert-danger" style="display: none;">Please Enter Correct Credentials</div>
 									<div class="form-group">
 										<form:input name="username" id="username" tabindex="1"
 											cssClass="form-control" path="username"></form:input>
@@ -86,6 +89,7 @@
 									<div class="form-group">
 										<form:input type="password" name="password" id="password"
 											tabindex="2" cssClass="form-control" path="password"></form:input>
+
 									</div>
 									<div class="form-group text-center">
 										<input type="checkbox" tabindex="3" class="" name="remember"
@@ -95,7 +99,7 @@
 									<div class="form-group">
 										<div class="row">
 											<div class="col-sm-6 col-sm-offset-3">
-												<input type="submit" name="login-submit" id="login-submit"
+												<input type="button" name="login-submit" id="login-submit"
 													tabindex="4" class="form-control btn btn-login"
 													value="Log In">
 											</div>
@@ -117,6 +121,8 @@
 									style="display: none;">
 									<div class="alert alert-success" style="display: none;">Registration
 										successfull!</div>
+									<div class="alert alert-danger" style="display: none;">Registration
+										Failed!</div>
 									<div class="form-group">
 										<input type="text" name="name" id="name" tabindex="1"
 											class="form-control" placeholder="Full Name" value="">
@@ -173,5 +179,5 @@
 
 
 
-	<jsp:include page="../views/common/common.jsp"></jsp:include>
-	 <script src="js/homepage.js"></script>
+<jsp:include page="../views/common/common.jsp"></jsp:include>
+<script src="js/homepage.js"></script>

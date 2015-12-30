@@ -32,8 +32,12 @@ public interface IUser {
 
 	Long getUserId();
 
-	 List<Role> getRoles() ;
+	List<Role> getRoles();
 
-	 void setRoles(List<Role> roles) ;
+	void setRoles(List<Role> roles);
+
+	 String getUsername();
+
+	 void setUsername(String username);
 
 }

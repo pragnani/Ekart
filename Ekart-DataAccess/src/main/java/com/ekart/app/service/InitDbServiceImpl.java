@@ -55,7 +55,8 @@ public class InitDbServiceImpl implements InitDbService {
 			User userAdmin = new User();
 			userAdmin.setEmail("admin@ekart.com");
 			userAdmin.setEnabled(true);
-			userAdmin.setName("admin");
+			userAdmin.setName("Pragnani Kinnera");
+			userAdmin.setUsername("admin");
 			userAdmin.setPassword("password");
 			userAdmin.setRoles(adminRolesList);
 
@@ -64,7 +65,8 @@ public class InitDbServiceImpl implements InitDbService {
 			User userCustomer = new User();
 			userCustomer.setEmail("nani@ekart.com");
 			userCustomer.setEnabled(true);
-			userCustomer.setName("nani");
+			userCustomer.setName("Nani K");
+			userCustomer.setUsername("nani");
 			userCustomer.setPassword("password");
 			userCustomer.setRoles(userRoleList);
 			userService.createUser(userCustomer);
@@ -72,7 +74,8 @@ public class InitDbServiceImpl implements InitDbService {
 			User userMerchant = new User();
 			userMerchant.setEmail("ramu@ekart.com");
 			userMerchant.setEnabled(true);
-			userMerchant.setName("ramu");
+			userMerchant.setName("Ramu P");
+			userMerchant.setUsername("ramu");
 			userMerchant.setPassword("password");
 			userMerchant.setRoles(merchantRoleList);
 

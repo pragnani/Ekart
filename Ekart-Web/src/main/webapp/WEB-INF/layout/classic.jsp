@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
- <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -23,11 +23,14 @@
 </head>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles-extras"
 	prefix="tilesx"%>
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="sec"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%-- <tilesx:useAttribute name="current" /> --%>
 <body>
-<script type="text/javascript">
-var contextRoot = "<spring:url  value='/'></spring:url>";
-</script>
+	<script type="text/javascript">
+		var contextRoot = "<spring:url  value='/'></spring:url>";
+	</script>
 	<!-- Navigation -->
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 		<div class="container">
@@ -39,20 +42,46 @@ var contextRoot = "<spring:url  value='/'></spring:url>";
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#"> <img alt="Brand" src="images/brand.png" >
+				<a class="navbar-brand" href="#"> <img alt="Brand"
+					src="images/brand.png">
 				</a>
 			</div>
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse"
 				id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
+
+					<sec:authorize access="hasRole('ROLE_ADMIN')">
+						<li><a href="#">Products</a></li>
+						<li><a href="#">Users</a></li>
+						<li><a href="#">Offers</a></li>
+					</sec:authorize>
+
+					<sec:authorize access="hasRole('ROLE_MERCHANT')">
+						<li><a href="#">My Products</a></li>
+						<li><a href="#">Sales</a></li>
+					</sec:authorize>
+
 					<li><a href="#">About</a></li>
-					<li><a href="#">Services</a></li>
 					<li><a href="#">Contact</a></li>
+
+
 				</ul>
-				<button type="button" id="btnRegister" class="btn btn-default navbar-btn navbar-right" data-toggle="modal" data-target="#myModal">Register</button>
-				<button type="button" id="btnSignin" class="btn btn-default navbar-btn navbar-right" data-toggle="modal" data-target="#myModal">Sign
-					in</button>
+				<sec:authorize access="! isAuthenticated()">
+					<button type="button" id="btnRegister"
+						class="btn btn-default navbar-btn navbar-right"
+						data-toggle="modal" data-target="#myModal">Register</button>
+				</sec:authorize>
+				<sec:authorize access="! isAuthenticated()">
+					<button type="button" id="btnSignin"
+						class="btn btn-default navbar-btn navbar-right"
+						data-toggle="modal" data-target="#myModal">Sign in</button>
+				</sec:authorize>
+
+				<sec:authorize access="isAuthenticated()">
+					<a href="<spring:url value="/logout"></spring:url>"
+						class="btn btn-default navbar-btn navbar-right">Logout</a>
+				</sec:authorize>
 			</div>
 
 			<!-- /.navbar-collapse -->

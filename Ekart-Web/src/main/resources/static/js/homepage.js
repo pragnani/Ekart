@@ -1,5 +1,11 @@
 $(function() {
 
+	// var token = $("meta[name='_csrf']").attr("content");
+	// var header = $("meta[name='_csrf_header']").attr("content");
+	// $(document).ajaxSend(function(e, xhr, options) {
+	// xhr.setRequestHeader(header, token);
+	// });
+
 	var loginFun = function(e) {
 		$("#login-form").delay(100).fadeIn(100);
 		$("#register-form").fadeOut(100);
@@ -26,6 +32,27 @@ $(function() {
 	$('#btnSignin').click(loginFun);
 	$('#btnRegister').click(registerFun);
 
+	$("#login-form").validate(
+			{
+				rules : {
+					username : {
+						required : true,
+						minlength : 4,
+					},
+					password : {
+						required : true,
+						minlength : 5
+					},
+					highlight : function(element) {
+						$(element).closest('.form-group').removeClass(
+								'has-success').addClass('has-error');
+					},
+					unhighlight : function(element) {
+						$(element).closest('.form-group').removeClass(
+								'has-error').addClass('has-success');
+					}
+				}
+			});
 	$("#register-form").validate(
 			{
 				rules : {
@@ -87,7 +114,52 @@ $(function() {
 				url : $form.attr('action'),
 				data : $form.serializeArray(),
 				success : function(data) {
-					alert(data);
+					if (data.success) {
+						$form.find(".alert-danger").css('display', 'none');
+						$form.find(".alert-success").css('display', 'block');
+					} else {
+						$form.find(".alert-success").css('display', 'none');
+						$form.find(".alert-danger").css('display', 'block');
+					}
+				}
+			});
+
+		}
+
+	});
+	$.fn.serializeObject = function() {
+		var o = {};
+		var a = this.serializeArray();
+		$.each(a, function() {
+			if (o[this.name] !== undefined) {
+				if (!o[this.name].push) {
+					o[this.name] = [ o[this.name] ];
+				}
+				o[this.name].push(this.value || '');
+			} else {
+				o[this.name] = this.value || '';
+			}
+		});
+		return o;
+	};
+	$("#login-submit").on("click", function(e) {
+
+		var $form = $('#login-form');
+		if ($form.valid()) {
+
+			$.ajax({
+				type : "POST",
+				cache : false,
+				url : $form.attr('action'),
+				data : $form.serializeArray(),
+				success : function(data) {
+					if (data.success) {
+						window.location="/";
+						window.location.reload();
+					}
+					else{
+						$form.find(".alert-danger").css('display', 'block');
+					}
 				}
 			});
 
