@@ -7,7 +7,7 @@
 	<packaging>war</packaging>
 	<name>Ekart-Services</name>
 	<properties>
-	<start-class>com.ekart.app.services.EkartApp</start-class>
+		<start-class>com.ekart.app.services.EkartApp</start-class>
 	</properties>
 
 	<build>
@@ -76,9 +76,17 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-ehcache</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>com.ekart.app</groupId>
 			<artifactId>Ekart-DataAccess</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
 		</dependency>
 
 	</dependencies>
