@@ -1,5 +1,7 @@
 package com.ekart.app.dao;
 
-public interface ProductDao {
+import com.ekart.app.model.Product;
+
+public interface ProductDao extends Dao<Product>{
 
 }

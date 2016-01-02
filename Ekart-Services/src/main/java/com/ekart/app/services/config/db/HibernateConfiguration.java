@@ -40,6 +40,9 @@ public class HibernateConfiguration {
 		properties.put("hibernate.format_sql", environment.getRequiredProperty("spring.jpa.hibernate.format_sql"));
 		properties.put("hibernate.use_sql_comments", environment.getRequiredProperty("spring.jpa.hibernate.use_sql_comments"));
 		properties.put("hibernate.hbm2ddl.auto", environment.getRequiredProperty("spring.jpa.hibernate.ddl-auto"));
+		properties.put("hibernate.cache.region.factory_class", environment.getRequiredProperty("spring.jpa.properties.hibernate.cache.region.factory_class"));
+		properties.put("hibernate.generate_statistics", environment.getRequiredProperty("spring.jpa.hibernate.generate_statistics"));
+		
 		
 		return properties;
 	}

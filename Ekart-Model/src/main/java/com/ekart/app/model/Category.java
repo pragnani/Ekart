@@ -14,6 +14,9 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 @NamedQueries(  
         {  
             @NamedQuery(  
@@ -21,7 +24,9 @@ import javax.persistence.OneToMany;
             query = "from Category c where c.mainCategory = NULL"  
             )  
         }  
-    )  
+    ) 
+
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Entity
 public class Category extends AbstractEntity implements ICategory {
 
@@ -39,10 +44,82 @@ public class Category extends AbstractEntity implements ICategory {
     @JoinColumn(name="maincategory_id")
 	Category mainCategory;
 	
+	
+
 	@OneToMany(mappedBy="mainCategory")
 	Set<Category> subCategories = new HashSet<>(0);
 	
 	@OneToMany(mappedBy="category")
 	Set<Product> products= new HashSet<>(0); 
+	
+	/**
+	 * @return the id
+	 */
+	public Long getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * @return the mainCategory
+	 */
+	public Category getMainCategory() {
+		return mainCategory;
+	}
+
+	/**
+	 * @param mainCategory the mainCategory to set
+	 */
+	public void setMainCategory(Category mainCategory) {
+		this.mainCategory = mainCategory;
+	}
+
+	/**
+	 * @return the subCategories
+	 */
+	public Set<Category> getSubCategories() {
+		return subCategories;
+	}
+
+	/**
+	 * @param subCategories the subCategories to set
+	 */
+	public void setSubCategories(Set<Category> subCategories) {
+		this.subCategories = subCategories;
+	}
+
+	/**
+	 * @return the products
+	 */
+	public Set<Product> getProducts() {
+		return products;
+	}
+
+	/**
+	 * @param products the products to set
+	 */
+	public void setProducts(Set<Product> products) {
+		this.products = products;
+	}
 
 }
