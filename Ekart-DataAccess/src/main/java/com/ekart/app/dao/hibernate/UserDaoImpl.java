@@ -23,7 +23,7 @@ public class UserDaoImpl extends AbstractHbnDao<User> implements UserDao {
 
 	@Override
 	public IUser getByUserAndPassword(String name, String password) {
-		Criteria userCriteria = getSession().createCriteria(IUser.class);
+		Criteria userCriteria = getSession().createCriteria(User.class);
 		userCriteria.add(Restrictions.eq("username", name));
 		userCriteria.add(Restrictions.eq("password", password));
 		userCriteria.setFetchMode("roles", FetchMode.JOIN);

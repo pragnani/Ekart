@@ -1,8 +1,11 @@
 package com.ekart.app.rest;
 
+import org.springframework.beans.factory.annotation.Value;
+
 public final class DataServiceUtil {
 
-	public static final String SERVER_ADDRESS = "http://localhost:9090/Ekart-Services";
+	@Value("${server.address}")
+	public static final String SERVER_ADDRESS = "http://localhost:9090";
 
 	public static final String POST_REGISTER_USER = "/user";
 	
